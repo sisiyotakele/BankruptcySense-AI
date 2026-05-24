@@ -1,0 +1,57 @@
+# ─── Virtual Environment ───────────────────────────────
+venv/
+env/
+.env/
+.venv/
+
+# ─── Python Cache ───────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# ─── Jupyter Notebooks ──────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ─── ML Model Files ─────────────────────────────────────
+ml/model/*.pkl
+ml/model/*.joblib
+
+# ─── Dataset / Raw Data ─────────────────────────────────
+data/raw/
+data/processed/
+
+# ─── Environment Variables ──────────────────────────────
+.env
+.env.local
+.env.production
+
+# ─── Flask ──────────────────────────────────────────────
+instance/
+backend/history.json
+
+# ─── React / Node ───────────────────────────────────────
+frontend/node_modules/
+frontend/build/
+frontend/.env
+frontend/.env.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ─── OS Files ───────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─── IDE / Editor ───────────────────────────────────────
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ─── Logs ───────────────────────────────────────────────
+*.log
+logs/
