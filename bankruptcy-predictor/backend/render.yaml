@@ -9,5 +9,5 @@ services:
       - key: PYTHON_VERSION
         value: "3.11"
       - key: CORS_ORIGINS
-        value: "https://your-vercel-app.vercel.app"   # update after Vercel deploy
+        value: "https://bankruptcy-sense-ai.vercel.app"
     healthCheckPath: /health    autoDeploy: true
