@@ -1,0 +1,75 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Flask
+instance/
+.webassets-cache
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node modules
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Build output
+dist/
+build/
+frontend/dist/
+
+# Vite
+.vite/
+
+# Env files (keep .env.example, ignore actual secrets)
+.env
+.env.local
+.env.*.local
+
+# Model files — committed so Render can load them at runtime
+# rf_model.pkl is ~13 MB which is within GitHub's limits
+# If the model grows beyond 50 MB, switch to Git LFS
+# *.pkl   ← intentionally NOT ignored
+
+# Data
+data/raw/
+data/processed/
+
+# History (runtime file, not source)
+backend/history.json

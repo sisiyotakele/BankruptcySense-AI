@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: bankruptcysense-api
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11"
+      - key: CORS_ORIGINS
+        value: "https://your-vercel-app.vercel.app"   # update after Vercel deploy
+    healthCheckPath: /health
+    autoDeploy: true
