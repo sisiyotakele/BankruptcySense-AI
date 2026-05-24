@@ -61,6 +61,22 @@ def internal_error(e):
 # ROUTES
 # ══════════════════════════════════════════════════════════════════════════════
 
+@app.route("/", methods=["GET"])
+def home():
+    """Root route — satisfies Render's default health check on GET /"""
+    return jsonify({
+        "status":  "ok",
+        "message": "BankruptcySense API is running",
+        "docs": {
+            "health":        "GET  /health",
+            "features":      "GET  /features",
+            "predict":       "POST /predict",
+            "predict_batch": "POST /predict/batch",
+            "history":       "GET  /history",
+        }
+    }), 200
+
+
 @app.route("/health", methods=["GET"])
 def health():
     """

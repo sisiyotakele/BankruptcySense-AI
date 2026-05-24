@@ -10,5 +10,4 @@ services:
         value: "3.11"
       - key: CORS_ORIGINS
         value: "https://your-vercel-app.vercel.app"   # update after Vercel deploy
-    healthCheckPath: /health
-    autoDeploy: true
+    healthCheckPath: /health    autoDeploy: true
