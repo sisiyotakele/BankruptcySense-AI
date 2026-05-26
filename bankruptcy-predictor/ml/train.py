@@ -61,6 +61,7 @@ from config import (
     MODEL_PATH,
     SCALER_PATH,
     FEATURES_PATH,
+    CLIP_BOUNDS_PATH,
     THRESHOLD_PATH,
     TOP_N_FEATURES,
     TEST_SIZE,
@@ -167,7 +168,8 @@ def clip_outliers(X_train: pd.DataFrame, X_test: pd.DataFrame):
     upper = X_train.quantile(OUTLIER_UPPER_PCTILE / 100)
     X_train_clipped = X_train.clip(lower=lower, upper=upper, axis=1)
     X_test_clipped  = X_test.clip(lower=lower, upper=upper, axis=1)
-    return X_train_clipped, X_test_clipped
+    # Return bounds so they can be saved and reused at inference time
+    return X_train_clipped, X_test_clipped, lower.values, upper.values
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -433,20 +435,24 @@ def evaluate_on_test(
 # SAVE ARTEFACTS
 # ══════════════════════════════════════════════════════════════════════════════
 
-def save_artifacts(model, scaler, top_features: list, threshold: float):
-    """Persist model, scaler, feature list, and threshold to disk."""
+def save_artifacts(model, scaler, top_features: list, threshold: float,
+                   clip_lower: np.ndarray, clip_upper: np.ndarray):
+    """Persist model, scaler, feature list, clip bounds, and threshold to disk."""
     print("\n── Saving Artefacts ──────────────────────────────────────────────")
     os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
 
-    with open(MODEL_PATH,     "wb") as f: pickle.dump(model,        f)
-    with open(SCALER_PATH,    "wb") as f: pickle.dump(scaler,       f)
-    with open(FEATURES_PATH,  "wb") as f: pickle.dump(top_features, f)
-    with open(THRESHOLD_PATH, "wb") as f: pickle.dump(threshold,    f)
+    with open(MODEL_PATH,      "wb") as f: pickle.dump(model,        f)
+    with open(SCALER_PATH,     "wb") as f: pickle.dump(scaler,       f)
+    with open(FEATURES_PATH,   "wb") as f: pickle.dump(top_features, f)
+    with open(THRESHOLD_PATH,  "wb") as f: pickle.dump(threshold,    f)
+    with open(CLIP_BOUNDS_PATH,"wb") as f: pickle.dump(
+        {"lower": clip_lower, "upper": clip_upper}, f)
 
-    print(f"    Model     → {MODEL_PATH}")
-    print(f"    Scaler    → {SCALER_PATH}")
-    print(f"    Features  → {FEATURES_PATH}")
-    print(f"    Threshold → {THRESHOLD_PATH}  (value: {threshold:.4f})")
+    print(f"    Model       → {MODEL_PATH}")
+    print(f"    Scaler      → {SCALER_PATH}")
+    print(f"    Features    → {FEATURES_PATH}")
+    print(f"    Clip bounds → {CLIP_BOUNDS_PATH}")
+    print(f"    Threshold   → {THRESHOLD_PATH}  (value: {threshold:.4f})")
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -472,7 +478,7 @@ def main():
     X_train, X_test = impute_median(X_train, X_test)
 
     # 5. Clip outliers (percentiles from train)
-    X_train, X_test = clip_outliers(X_train, X_test)
+    X_train, X_test, clip_lower, clip_upper = clip_outliers(X_train, X_test)
 
     # 6. Scale (fit on train)
     X_train_sc, X_test_sc, scaler = scale_features(X_train, X_test)
@@ -501,7 +507,7 @@ def main():
     metrics = evaluate_on_test(best_model, X_test_sel, y_test, threshold)
 
     # 12. Save all artefacts
-    save_artifacts(best_model, scaler, top_features, threshold)
+    save_artifacts(best_model, scaler, top_features, threshold, clip_lower, clip_upper)
 
     print("\n" + "=" * 65)
     print("  Training complete.")

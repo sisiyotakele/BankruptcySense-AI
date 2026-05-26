@@ -12,6 +12,7 @@ DATA_PROC_PATH   = os.path.join(BASE_DIR, "data", "processed")
 MODEL_PATH       = os.path.join(BASE_DIR, "ml", "model", "rf_model.pkl")
 SCALER_PATH      = os.path.join(BASE_DIR, "ml", "model", "scaler.pkl")
 FEATURES_PATH    = os.path.join(BASE_DIR, "ml", "model", "features.pkl")
+CLIP_BOUNDS_PATH = os.path.join(BASE_DIR, "ml", "model", "clip_bounds.pkl")
 
 # Path where evaluate.py saves the confusion matrix plot
 CONFUSION_MATRIX_PATH = os.path.join(BASE_DIR, "ml", "model", "confusion_matrix.png")
