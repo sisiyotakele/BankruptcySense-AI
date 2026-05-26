@@ -59,8 +59,8 @@ export default function App() {
                     <div className="flex items-center gap-3">
                         <div className="flex items-center gap-1.5 text-xs">
                             <span className={`w-2 h-2 rounded-full ${apiStatus === 'ok' ? 'bg-emerald-500' :
-                                    apiStatus === 'error' ? 'bg-red-500' :
-                                        'bg-yellow-500 animate-pulse'
+                                apiStatus === 'error' ? 'bg-red-500' :
+                                    'bg-yellow-500 animate-pulse'
                                 }`} aria-hidden="true" />
                             <span className="text-gray-500 hidden sm:inline">
                                 {apiStatus === 'ok' ? 'API online' : apiStatus === 'error' ? 'API offline' : 'Connecting…'}
@@ -160,7 +160,7 @@ export default function App() {
                                 <>
                                     <ResultCard result={result} />
                                     <FeatureChart features={result.top_features ?? []} />
-                                    <AIRecommendations recommendations={result.recommendations} />
+                                    <AIRecommendations result={result} />
                                 </>
                             )}
                         </div>
